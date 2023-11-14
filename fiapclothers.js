@@ -63,11 +63,7 @@ app.post("/cadastroproduto", async(req, res)=>{
     const descricao = req.body.descricao;
     const fornecedor = req.body.fornecedor;
     const dataFabricacao = req.body.dataFabricacao;
-    const quantidadeEstoque = req.body.quantidadeEstoque
-
-    if(quantidadeEstoque <= 0 || quantidadeEstoque > 21){
-        return res.status(400).json({error: "Estoque so é posivel de 0 até 21.."})
-    }
+    const quantidadeEstoque = req.body.quantidadeEstoque;
 
     //mandando para banco
     const produto = new Produto({
@@ -80,7 +76,7 @@ app.post("/cadastroproduto", async(req, res)=>{
 
     try{
         const newProduto = await produto.save();
-        res.json({error : null, msg : "Cadastro ok", produtoId : newProduto._id});
+        res.redirect('/');
     } catch(error){
         res.status(400).json({error});
     }
